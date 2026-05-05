@@ -1,56 +1,40 @@
-# QuickFind
+# qf (QuickFind)
 
-A fast file search tool for Windows. It indexes your filesystem in the background and serves results via TUI or HTTP API.
+`qf` is an early-stage Python project for a Windows-first file search tool.
+
+At the moment, this repository contains a minimal runnable entrypoint plus product docs that describe the intended architecture.
+
+## Current status
+
+This project is in **prototype/spec phase**.
+
+- Implemented now: a basic Python entrypoint (`main.py`).
+- Documented target: indexer + HTTP API + TUI workflow (`docs/index.md`).
+- Missing from current codebase: search engine, indexing pipeline, API server, TUI client, Windows packaging assets, and tests.
 
 ## Quick start
 
-```
-qf                    # Open TUI search
-qf --server           # Start HTTP server on port 7890
-```
+### Requirements
 
-## How it works
+- Python 3.12+
+- [uv](https://docs.astral.sh/uv/)
 
-**qfi.exe** runs in the background. It indexes files using NTFS USN journal and watches for changes. It also serves the HTTP API.
 
-**qf.exe** is the search interface. It connects to qfi's HTTP API and provides an interactive TUI for searching.
 
-If qfi isn't running, qf starts it automatically.
+## QuickFind system 
 
-## Search behavior
+- NTFS USN-based indexing
+- SQLite + FTS5 storage
+- HTTP search API
+- TUI client and tray integration
+- Windows installer flow
 
-File names are searched first. Content is searched second. Path matches always rank higher. Use `--content` to search inside files only.
+These components are not yet present in source form here.
 
-## HTTP API
+## Roadmap to a deployable build
 
-```
-GET /search?q=query         Search by filename
-GET /search?q=query&c=1     Search inside files
-GET /stats                  Index stats
-GET /health                 Health check
-```
-
-## Configuration
-
-Edit `%APPDATA%\QuickFind\config.json`:
-
-```json
-{
-  "ignored_patterns": ["node_modules", ".git", "__pycache__"],
-  "indexed_extensions": [".txt", ".md", ".py", ".js"],
-  "http_port": 7890,
-  "auto_start": true
-}
-```
-
-## Files
-
-- Binary: `C:\Program Files\QuickFind\`
-- Data: `%LOCALAPPDATA%\QuickFind\`
-
-## Build
-
-```bash
-uv run nuitka --onefile --windows-icon=qf.ico --product-name=QuickFind src/qf.py -o qf.exe
-uv run nuitka --onefile --windows-icon=qfi.ico --product-name=QuickFindIndexer src/qfi.py -o qfi.exe
-```
+1. Create a real package layout (`src/qf/`) with modules for indexer, API, and CLI/TUI.
+2. Implement SQLite schema + index update pipeline.
+3. Add HTTP API endpoints and health/stats handlers.
+4. Add tests (unit + integration) and CI checks.
+5. Add executable packaging (Nuitka/PyInstaller) after core behavior is stable.
