@@ -1,7 +1,7 @@
 [project]
-name = "qf"
+name = "pry"
 version = "0.0.1"
-description = "Add your description here"
+description = "A Windows search tool"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []

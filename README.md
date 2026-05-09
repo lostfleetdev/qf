@@ -1,6 +1,6 @@
-# qf (QuickFind)
+# pry
 
-`qf` is an early-stage Python project for a Windows-first file search tool.
+`pry` is an early-stage Python project for a Windows-first file search tool.
 
 At the moment, this repository contains a minimal runnable entrypoint plus product docs that describe the intended architecture.
 
@@ -33,7 +33,7 @@ These components are not yet present in source form here.
 
 ## Roadmap to a deployable build
 
-1. Create a real package layout (`src/qf/`) with modules for indexer, API, and CLI/TUI.
+1. Create a real package layout (`src/pry/`) with modules for indexer, API, and CLI/TUI.
 2. Implement SQLite schema + index update pipeline.
 3. Add HTTP API endpoints and health/stats handlers.
 4. Add tests (unit + integration) and CI checks.
