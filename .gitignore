@@ -8,3 +8,7 @@ wheels/
 
 # Virtual environments
 .venv
+
+AGENTS.md
+
+ANALYSIS_REPORT.md
