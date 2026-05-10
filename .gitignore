@@ -10,5 +10,7 @@ wheels/
 .venv
 
 AGENTS.md
-
 ANALYSIS_REPORT.md
+PLAN.md
+plans/
+docs/explaination-phase1.md

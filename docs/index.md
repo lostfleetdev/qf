@@ -1,16 +1,16 @@
-# QuickFind
+# pry
 
 A fast, lightweight file search tool for Windows. It indexes your filesystem in the background and serves results via TUI or HTTP API.
 
 ## What it does
 
-QuickFind watches your filesystem and keeps an index up to date. When you search, it returns results instantly—no waiting for a filesystem scan.
+pry watches your filesystem and keeps an index up to date. When you search, it returns results instantly—no waiting for a filesystem scan.
 
 Think of it as Everything for the command line, with an HTTP interface for scripting and integration with other tools.
 
 ## Components
 
-### qfi.exe
+### pri.exe
 
 The indexer and HTTP server combined. It:
 
@@ -22,24 +22,24 @@ The indexer and HTTP server combined. It:
 - Tray icon shows server status (green = running, gray = stopped)
 
 **Tray menu options:**
-- Search (opens qf.exe)
+- Search (opens pry.exe)
 - Toggle Server (enable/disable HTTP API)
 - Rebuild Index
 - Exit
 
-The indexer stores data in `%LOCALAPPDATA%\QuickFind\index\`. This includes the SQLite database with file paths, metadata, and full-text indexes for supported file types.
+The indexer stores data in `%LOCALAPPDATA%\pry\index\`. This includes the SQLite database with file paths, metadata, and full-text indexes for supported file types.
 
-### qf.exe
+### pry.exe
 
-The search interface. It's a TUI app that connects to qfi's HTTP API.
+The search interface. It's a TUI app that connects to pri's HTTP API.
 
 - Opens an interactive terminal UI for browsing and searching
 - Fuzzy matching, keyboard navigation, preview panel
-- Starts qfi automatically if it's not running
+- Starts pri automatically if it's not running
 
 ## Search Algorithm
 
-QuickFind uses a two-phase search with confidence-based ranking.
+pry uses a two-phase search with confidence-based ranking.
 
 ### Phase 1: Path Matching
 
@@ -117,7 +117,7 @@ GET /toggle       Toggle HTTP server on/off
 
 ## Ignored folders
 
-By default, QuickFind skips common library and dependency directories:
+By default, pry skips common library and dependency directories:
 
 - `node_modules`
 - `.git`, `.svn`, `.hg`
@@ -132,7 +132,7 @@ You can customize this in the config file.
 
 ## Configuration
 
-Config lives in `%APPDATA%\QuickFind\config.json`.
+Config lives in `%APPDATA%\pry\config.json`.
 
 ```json
 {
@@ -149,7 +149,7 @@ Config lives in `%APPDATA%\QuickFind\config.json`.
 
 ### NTFS USN Journal
 
-QuickFind uses the NTFS Update Sequence Number (USN) journal to track file changes. This is the same mechanism Everything uses.
+pry uses the NTFS Update Sequence Number (USN) journal to track file changes. This is the same mechanism Everything uses.
 
 - **No admin rights required** for basic operation
 - **Real-time updates** when files are created, modified, or deleted
@@ -162,11 +162,11 @@ The USN journal lives in the MFT and records:
 - Renames
 - Security changes
 
-On first run, QuickFind reads the MFT directly to build the initial index. After that, only USN journal deltas are processed.
+On first run, pry reads the MFT directly to build the initial index. After that, only USN journal deltas are processed.
 
 ### SQLite Storage
 
-Two databases in `%LOCALAPPDATA%\QuickFind\index\`:
+Two databases in `%LOCALAPPDATA%\pry\index\`:
 
 **main.db** - File index
 ```sql
@@ -231,13 +231,13 @@ Typical time: ~5-10 minutes for 500,000 files.
 
 ## Installation
 
-Binaries install to `C:\Program Files\QuickFind\`. Data goes to `%LOCALAPPDATA%\QuickFind\`.
+Binaries install to `C:\Program Files\pry\`. Data goes to `%LOCALAPPDATA%\pry\`.
 
 ```
-qf --install    # Set up auto-start service and initialize index
+pry --install    # Set up auto-start service and initialize index
 ```
 
-The installer registers qfi.exe to start with Windows.
+The installer registers pri.exe to start with Windows.
 
 ## Development
 

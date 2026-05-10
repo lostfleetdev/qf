@@ -21,7 +21,7 @@ This project is in **prototype/spec phase**.
 
 
 
-## QuickFind system 
+## pry system 
 
 - NTFS USN-based indexing
 - SQLite + FTS5 storage
